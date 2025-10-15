@@ -13,7 +13,7 @@ const loginController = async (req: Request, res: Response) => {
 
   } catch (error: any) {
     if (error instanceof statusCodeErrors) {
-      console.log(`[Status Code Error - ${error.statusCode}]`, error.name);
+      console.log(`[Status Code Error - ${error.statusCode}]`, error.message);
       res.status(error.statusCode).json({
         message: error.message,
       });
