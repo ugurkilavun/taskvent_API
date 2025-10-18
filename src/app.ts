@@ -7,6 +7,7 @@ import connectDB from "./configs/connectDB";
 // Pages
 import login from "./routes/login";
 import register from "./routes/register";
+import verify from "./routes/verify";
 
 // .env config
 dotenv.config({ quiet: true })
@@ -23,5 +24,6 @@ app.use(cors({ origin: "*" })); // Permitted URLs
 // Router usage area
 app.use('/', login);
 app.use('/', register);
+app.use('/', verify);
 
 export default app;

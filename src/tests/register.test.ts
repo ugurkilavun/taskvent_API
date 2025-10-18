@@ -52,7 +52,7 @@ describe("POST /register", () => {
     });
 
     expect(res.statusCode).toEqual(409);
-    expect(res.body.message).toMatch(/already exists!/);
+    expect(res.body.message).toMatch(/already exists./);
   });
 
   it("It should return 400 Bad Request with an error message.", async () => {
@@ -66,7 +66,7 @@ describe("POST /register", () => {
     });
 
     expect(res.statusCode).toEqual(400);
-    expect(res.body.message).toBe('Incomplete data!');
+    expect(res.body.message).toBe('Incomplete data.');
   });
 
 });
