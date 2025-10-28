@@ -3,7 +3,7 @@ import dotenv from 'dotenv'
 import http from "http";
 
 // .env config
-dotenv.config({ quiet: true })
+dotenv.config({ quiet: true });
 
 const PORT: number | string = process.env.PORT || 5200;
 const server = http.createServer(app);

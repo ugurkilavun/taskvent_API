@@ -3,30 +3,115 @@ import { Request, Response } from 'express';
 import loginService from "../services/loginService";
 // Errors
 import { statusCodeErrors } from "../utils/statusCodeErrors";
+// Middlewares
+import { logger } from "../middlewares/logger";
+// Types
+import { authResponseType } from "../types/responses";
 
 const loginController = async (req: Request, res: Response) => {
-  const { username_or_email, password } = req.body;
+  // For performance
+  const initialPeriod = performance.now();
+
+  // Datas
+  const { username, password } = req.body;
+
+  // Logger
+  const logg2r = new logger();
 
   try {
-    const value: object = await loginService(username_or_email, password);
-    res.status(200).json(value);
+
+    const { response, userId }: authResponseType = await loginService(username, password);
+    res.status(200).json(response);
+
+    // Logger - RESPONSE
+    logg2r.create({
+      timestamp: new Date(),
+      level: "RESPONSE",
+      logType: "login",
+      message: response.message,
+      service: "login.service",
+      userID: userId,
+      ip: req.ip,
+      endpoint: "/login",
+      method: req.method,
+      userAgent: req.get('user-agent'),
+      statusCode: 200,
+      durationMs: performance.now() - initialPeriod,
+    }, { file: "logins", seeLogConsole: true });
 
   } catch (error: any) {
     if (error instanceof statusCodeErrors) {
-      console.log(`[Status Code Error - ${error.statusCode}]`, error.message);
       res.status(error.statusCode).json({
         message: error.message,
       });
+
+      // Logger - RESPONSE
+      logg2r.create({
+        timestamp: new Date(),
+        level: "RESPONSE",
+        logType: "login",
+        message: "Status code error!",
+        service: "login.service",
+        username: req.body?.username,
+        ip: req.ip,
+        endpoint: "/login",
+        method: req.method,
+        userAgent: req.get('user-agent'),
+        statusCode: error.statusCode,
+        durationMs: performance.now() - initialPeriod,
+        details: {
+          error: "STATCODEERROR",
+          stack: `Error: ${error.message}`
+        }
+      }, { file: "logins", seeLogConsole: true });
     } else if (error instanceof SyntaxError) {
-      console.log("[JSON Syntax Error]:", error.message);
       res.status(500).json({
-        message: "Server error!",
+        message: error.message,
       });
+
+      // Logger - RESPONSE
+      logg2r.create({
+        timestamp: new Date(),
+        level: "RESPONSE",
+        logType: "login",
+        message: "Syntax error!",
+        service: "login.service",
+        username: req.body?.username,
+        ip: req.ip,
+        endpoint: "/login",
+        method: req.method,
+        userAgent: req.get('user-agent'),
+        statusCode: 500,
+        durationMs: performance.now() - initialPeriod,
+        details: {
+          error: "SYNTAXERROR",
+          stack: `Error: ${error.message}`
+        }
+      }, { file: "logins", seeLogConsole: true });
     } else {
-      console.log("[Error]", error.message);
       res.status(500).json({
         message: "Server error!",
       });
+
+      // Logger - RESPONSE
+      logg2r.create({
+        timestamp: new Date(),
+        level: "RESPONSE",
+        logType: "login",
+        message: "Server error!",
+        service: "login.service",
+        username: req.body?.username,
+        ip: req.ip,
+        endpoint: "/login",
+        method: req.method,
+        userAgent: req.get('user-agent'),
+        statusCode: 500,
+        durationMs: performance.now() - initialPeriod,
+        details: {
+          error: "SERVERERROR",
+          stack: `Error: ${error.message}`
+        }
+      }, { file: "logins", seeLogConsole: true });
       throw error;
     }
   }

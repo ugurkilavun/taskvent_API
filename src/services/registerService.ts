@@ -9,15 +9,17 @@ import { checkEmailOrUsername, insertUser } from "../repositories/userRepository
 import { insertVerify } from "../repositories/verifyRepository";
 // Types
 import { UserType } from "../types/users";
+import { authResponseType } from "../types/responses";
 // Services
 import { sendVerificationEmail } from "./mailService";
 
 // .env config
 dotenv.config({ quiet: true });
 
-const registerService = async (DATA: UserType): Promise<object> => {
+const registerService = async (DATA: UserType): Promise<authResponseType> => {
 
   if (Object.values(DATA).some(x => x === undefined)) throw new statusCodeErrors("Incomplete data.", 400);
+  console.log()
 
   const username_: unknown = await checkEmailOrUsername(DATA.username);
   if (username_) throw new statusCodeErrors("Username already exists.", 409);
@@ -31,8 +33,6 @@ const registerService = async (DATA: UserType): Promise<object> => {
   // * Generate URL Token
   const urlToken: string = generateURLToken();
   const hash_URLToken = hashURLToken(urlToken);
-
-  // console.log(urlToken);
 
   // * Insert user
   const userIn: any = await insertUser({
@@ -56,18 +56,24 @@ const registerService = async (DATA: UserType): Promise<object> => {
   if (!verifyIn) throw new statusCodeErrors("Email verification URL could not be created.", 400);
 
   // * Send Verification Email
-  sendVerificationEmail(
-    DATA.email,
-    `${DATA.firstname} ${DATA.lastname}`,
-    `${process.env.URL}/verify?vToken=${urlToken}`,
-    DATA.country
-  );
+  sendVerificationEmail({
+    to: DATA.email,
+    name: `${DATA.firstname} ${DATA.lastname}`,
+    verificationUrl: `${process.env.URL}/verify?token=${urlToken}`,
+    lang: DATA.country
+  });
 
   const ACCESS_TOKEN: string = signToken({ id: (userIn._id).toJSON(), username: userIn.username, created_at: new Date() }, "access", '5s');
-
   const REFRESH_TOKEN: string = signToken({ id: (userIn._id).toJSON(), username: userIn.username, created_at: new Date() }, "refresh", '5d');
 
-  return { message: "Registration Successful.", access_token: ACCESS_TOKEN, refresh_token: REFRESH_TOKEN };
+  return {
+    response: {
+      message: "Registration Successful.",
+      access_token: ACCESS_TOKEN,
+      refresh_token: REFRESH_TOKEN
+    },
+    userId: userIn._id
+  };
 };
 
 export default registerService;

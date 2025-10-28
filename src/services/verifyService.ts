@@ -2,14 +2,15 @@
 import { statusCodeErrors } from "../utils/statusCodeErrors";
 import { verifyURLToken, hashURLToken } from "../utils/urlTokens";
 // Repositories
-import { updateVerify } from "../repositories/verifyRepository";
-import { findVerify } from "../repositories/verifyRepository";
+import { updateVerify, findVerify } from "../repositories/verifyRepository";
+// Types
+import { authResponseType } from "../types/responses";
 
-const verifyService = async (vToken: string): Promise<object> => {
+const verifyService = async (token: string): Promise<authResponseType> => {
 
-  if (!vToken) throw new statusCodeErrors("Token required.", 400);
+  if (!token) throw new statusCodeErrors("Token required.", 400);
 
-  const hash_URLToken = hashURLToken(vToken);
+  const hash_URLToken = hashURLToken(token);
 
   const verifyFin = await findVerify(hash_URLToken);
   if (!verifyFin) throw new statusCodeErrors("Invalid token.", 400);
@@ -23,7 +24,12 @@ const verifyService = async (vToken: string): Promise<object> => {
   const updateVerify_: unknown = updateVerify(verifyFin.id, hash_URLToken);
   if (!updateVerify_) throw new statusCodeErrors("Token error.", 400);
 
-  return { message: "Email verified." };
+  return {
+    response: {
+      message: "Email verified.",
+    },
+    userId: verifyFin.id
+  };
 
 };
 

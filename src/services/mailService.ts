@@ -1,14 +1,23 @@
-import { gmailTransporter } from '../configs/mailTransporter';
 import dotenv from 'dotenv';
+// Configs
+import { gmailTransporter } from '../configs/mailTransporter';
 // Mail
 import { evTemplateSelector } from "./mail/utils";
 // Types
 import { mailType } from "../types/mails";
+// Middlewares
+import { logger } from "../middlewares/logger";
 
 // .env config
 dotenv.config({ quiet: true });
 
-export const sendVerificationEmail = async (to: string, name: string, verificationUrl: string, lang: string) => {
+export const sendVerificationEmail = async ({ to, name, verificationUrl, lang }: { to: string, name: string, verificationUrl: string, lang: string }): Promise<void> => {
+  // For performance
+  const initialPeriod = performance.now();
+
+  // Logger
+  const logg2r = new logger();
+
   try {
     const { template, subject }: mailType = evTemplateSelector(lang);
 
@@ -24,9 +33,31 @@ export const sendVerificationEmail = async (to: string, name: string, verificati
       subject,
       html: htmlTemplate,
     });
-    console.log(`📨 Mail sent to ${to}`);
+    // Logger - RESPONSE
+    logg2r.create({
+      timestamp: new Date(),
+      level: "AUDIT",
+      logType: "mail",
+      message: `Mail sent to ${to}`,
+      service: "mail.service",
+      username: name,
+      durationMs: performance.now() - initialPeriod,
+    }, { file: "mails", seeLogConsole: true });
   } catch (error) {
-    console.error('❌ Mail error:', error);
+    // Logger - RESPONSE
+    logg2r.create({
+      timestamp: new Date(),
+      level: "AUDIT",
+      logType: "mail",
+      message: `Mail could not be sent: ${to}`,
+      service: "mail.service",
+      username: name,
+      durationMs: performance.now() - initialPeriod,
+      details: {
+        error: "MAILERROR",
+        stack: `Error: ${error.message}`
+      }
+    }, { file: "mails", seeLogConsole: true });
     throw error;
   }
 };

@@ -4,13 +4,17 @@ import cors from "cors";
 import dotenv from 'dotenv';
 // Configs
 import connectDB from "./configs/connectDB";
+import { createFiles } from "./configs/createFiles";
 // Pages
 import login from "./routes/login";
 import register from "./routes/register";
 import verify from "./routes/verify";
 
 // .env config
-dotenv.config({ quiet: true })
+dotenv.config({ quiet: true });
+
+// Creating directories and files
+createFiles();
 
 // Database Connection
 connectDB();
