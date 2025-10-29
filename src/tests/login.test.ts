@@ -19,7 +19,7 @@ describe("POST /login", () => {
   const fpassword: string = "12345";
 
   it("It should return 200 OK with the tokens.", async () => {
-    const res: any = await request(app).post('/login').send({ username_or_email: username, password: password });
+    const res: any = await request(app).post('/login').send({ username: username, password: password });
 
     expect(res.statusCode).toEqual(200);
     expect(res.body.message).toBe('Login successful.');
@@ -28,14 +28,14 @@ describe("POST /login", () => {
   });
 
   it("It should return a 401 Unauthorized response.", async () => {
-    const res: any = await request(app).post('/login').send({ username_or_email: fusername, password: fpassword });
+    const res: any = await request(app).post('/login').send({ username: fusername, password: fpassword });
 
     expect(res.statusCode).toEqual(401);
     expect(res.body.message).toBe('Username or email not found!');
   });
 
   it("It should return 400 Bad Request.", async () => {
-    const res: any = await request(app).post('/login').send({ username_or_email: username });
+    const res: any = await request(app).post('/login').send({ username: username });
 
     expect(res.statusCode).toEqual(400);
     expect(res.body.message).toBe('Incomplete data!');
