@@ -1,7 +1,7 @@
 // .env
 import dotenv from 'dotenv';
 // Middlewares
-import { logger } from "../middlewares/logger";
+import { logger } from "../middlewares/logger.middleware";
 
 dotenv.config({ quiet: true })
 

@@ -1,10 +1,10 @@
 // Utils
-import { statusCodeErrors } from "../utils/statusCodeErrors";
-import { verifyURLToken, hashURLToken } from "../utils/urlTokens";
+import { statusCodeErrors } from "../utils/statusCodeErrors.util";
+import { verifyURLToken, hashURLToken } from "../utils/urlTokens.util";
 // Repositories
-import { updateVerify, findVerify } from "../repositories/verifyRepository";
+import { updateVerify, findVerify } from "../repositories/verify.repository";
 // Types
-import { authResponseType } from "../types/responses";
+import { authResponseType } from "../types/responses.type";
 
 const verifyService = async (token: string): Promise<authResponseType> => {
 

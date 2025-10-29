@@ -4,7 +4,7 @@ import { emailVerificationTemplate_en } from "./templates/en/evTemplate_en";
 // TR
 import { emailVerificationTemplate_tr } from "./templates/tr/evTemplate_tr";
 // Types
-import { mailType } from "../../types/mails";
+import { mailType } from "../../types/mails.type";
 
 // * Email Verification Template Selector
 export const evTemplateSelector = (lang: string): mailType => {

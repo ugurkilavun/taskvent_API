@@ -1,7 +1,7 @@
 import express, { Router } from 'express';
 import dotenv from 'dotenv';
 // Controllers
-import registerController from "../controllers/registerController";
+import registerController from "../controllers/register.controller";
 
 // .env config
 dotenv.config({ quiet: true })

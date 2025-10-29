@@ -1,12 +1,12 @@
 import dotenv from 'dotenv';
 // Configs
-import { gmailTransporter } from '../configs/mailTransporter';
+import { gmailTransporter } from '../configs/mailTransporter.config';
 // Mail
 import { evTemplateSelector } from "./mail/utils";
 // Types
-import { mailType } from "../types/mails";
+import { mailType } from "../types/mails.type";
 // Middlewares
-import { logger } from "../middlewares/logger";
+import { logger } from "../middlewares/logger.middleware";
 
 // .env config
 dotenv.config({ quiet: true });

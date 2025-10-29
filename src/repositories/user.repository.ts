@@ -1,7 +1,7 @@
 // Models
-import users from "../models/users";
+import users from "../models/users.model";
 // Types
-import { UserType } from "../types/users";
+import { UserType } from "../types/users.type";
 
 export const findByEmailOrUsername = async (emailOrUsername: string): Promise<any> => {
   return emailOrUsername.includes("@")

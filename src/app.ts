@@ -3,12 +3,12 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import dotenv from 'dotenv';
 // Configs
-import connectDB from "./configs/connectDB";
-import { createFiles } from "./configs/createFiles";
+import connectDB from "./configs/db.config";
+import { createFiles } from "./configs/createFiles.config";
 // Pages
-import login from "./routes/login";
-import register from "./routes/register";
-import verify from "./routes/verify";
+import login from "./routes/login.route";
+import register from "./routes/register.route";
+import verify from "./routes/verify.route";
 
 // .env config
 dotenv.config({ quiet: true });

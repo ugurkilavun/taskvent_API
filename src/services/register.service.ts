@@ -1,17 +1,17 @@
 import bcrypt from "bcrypt";
 import dotenv from 'dotenv';
 // Utils
-import { signToken } from "../utils/jwt";
-import { statusCodeErrors } from "../utils/statusCodeErrors";
-import { generateURLToken, hashURLToken } from "../utils/urlTokens";
+import { signToken } from "../utils/jwt.util";
+import { statusCodeErrors } from "../utils/statusCodeErrors.util";
+import { generateURLToken, hashURLToken } from "../utils/urlTokens.util";
 // Repositories
-import { checkEmailOrUsername, insertUser } from "../repositories/userRepository";
-import { insertVerify } from "../repositories/verifyRepository";
+import { checkEmailOrUsername, insertUser } from "../repositories/user.repository";
+import { insertVerify } from "../repositories/verify.repository";
 // Types
-import { UserType } from "../types/users";
-import { authResponseType } from "../types/responses";
+import { UserType } from "../types/users.type";
+import { authResponseType } from "../types/responses.type";
 // Services
-import { sendVerificationEmail } from "./mailService";
+import { sendVerificationEmail } from "./mail.service";
 
 // .env config
 dotenv.config({ quiet: true });

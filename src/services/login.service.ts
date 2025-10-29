@@ -1,11 +1,11 @@
 import bcrypt from "bcrypt";
 // Utils
-import { signToken } from "../utils/jwt";
-import { statusCodeErrors } from "../utils/statusCodeErrors";
+import { signToken } from "../utils/jwt.util";
+import { statusCodeErrors } from "../utils/statusCodeErrors.util";
 // Repositories
-import { findByEmailOrUsername } from "../repositories/userRepository";
+import { findByEmailOrUsername } from "../repositories/user.repository";
 // Types
-import { authResponseType } from "../types/responses";
+import { authResponseType } from "../types/responses.type";
 
 const loginService = async (username?: string, password?: string): Promise<authResponseType> => {
 

@@ -1,43 +1,42 @@
 import { Request, Response } from 'express';
 // Services
-import loginService from "../services/loginService";
+import registerService from "../services/register.service";
 // Errors
-import { statusCodeErrors } from "../utils/statusCodeErrors";
-// Middlewares
-import { logger } from "../middlewares/logger";
+import { statusCodeErrors } from "../utils/statusCodeErrors.util";
 // Types
-import { authResponseType } from "../types/responses";
+import { authResponseType } from "../types/responses.type";
+// Middlewares
+import { logger } from "../middlewares/logger.middleware";
 
-const loginController = async (req: Request, res: Response) => {
+const registerController = async (req: Request, res: Response) => {
   // For performance
   const initialPeriod = performance.now();
 
   // Datas
-  const { username, password } = req.body;
+  const { firstname, lastname, username, email, password, dateOfBirth, country } = req.body;
 
   // Logger
   const logg2r = new logger();
 
   try {
-
-    const { response, userId }: authResponseType = await loginService(username, password);
-    res.status(200).json(response);
+    const { response, userId }: authResponseType = await registerService({ firstname, lastname, username, email, password, dateOfBirth, country });
+    res.status(201).json(response);
 
     // Logger - RESPONSE
     logg2r.create({
       timestamp: new Date(),
       level: "RESPONSE",
-      logType: "login",
+      logType: "register",
       message: response.message,
-      service: "login.service",
+      service: "register.service",
       userID: userId,
       ip: req.ip,
-      endpoint: "/login",
+      endpoint: "/register",
       method: req.method,
       userAgent: req.get('user-agent'),
-      statusCode: 200,
+      statusCode: 201,
       durationMs: performance.now() - initialPeriod,
-    }, { file: "logins", seeLogConsole: true });
+    }, { file: "registers", seeLogConsole: true });
 
   } catch (error: any) {
     if (error instanceof statusCodeErrors) {
@@ -49,12 +48,12 @@ const loginController = async (req: Request, res: Response) => {
       logg2r.create({
         timestamp: new Date(),
         level: "RESPONSE",
-        logType: "login",
+        logType: "register",
         message: "Status code error!",
-        service: "login.service",
+        service: "register.service",
         username: req.body?.username,
         ip: req.ip,
-        endpoint: "/login",
+        endpoint: "/register",
         method: req.method,
         userAgent: req.get('user-agent'),
         statusCode: error.statusCode,
@@ -63,7 +62,7 @@ const loginController = async (req: Request, res: Response) => {
           error: "STATCODEERROR",
           stack: `Error: ${error.message}`
         }
-      }, { file: "logins", seeLogConsole: true });
+      }, { file: "registers", seeLogConsole: true });
     } else if (error instanceof SyntaxError) {
       res.status(500).json({
         message: error.message,
@@ -73,12 +72,12 @@ const loginController = async (req: Request, res: Response) => {
       logg2r.create({
         timestamp: new Date(),
         level: "RESPONSE",
-        logType: "login",
+        logType: "registers",
         message: "Syntax error!",
-        service: "login.service",
+        service: "register.service",
         username: req.body?.username,
         ip: req.ip,
-        endpoint: "/login",
+        endpoint: "/register",
         method: req.method,
         userAgent: req.get('user-agent'),
         statusCode: 500,
@@ -87,7 +86,7 @@ const loginController = async (req: Request, res: Response) => {
           error: "SYNTAXERROR",
           stack: `Error: ${error.message}`
         }
-      }, { file: "logins", seeLogConsole: true });
+      }, { file: "registers", seeLogConsole: true });
     } else {
       res.status(500).json({
         message: "Server error!",
@@ -97,12 +96,12 @@ const loginController = async (req: Request, res: Response) => {
       logg2r.create({
         timestamp: new Date(),
         level: "RESPONSE",
-        logType: "login",
+        logType: "register",
         message: "Server error!",
-        service: "login.service",
+        service: "register.service",
         username: req.body?.username,
         ip: req.ip,
-        endpoint: "/login",
+        endpoint: "/register",
         method: req.method,
         userAgent: req.get('user-agent'),
         statusCode: 500,
@@ -111,10 +110,10 @@ const loginController = async (req: Request, res: Response) => {
           error: "SERVERERROR",
           stack: `Error: ${error.message}`
         }
-      }, { file: "logins", seeLogConsole: true });
-      throw error;
+      }, { file: "registers", seeLogConsole: true });
+      throw error; // unknown error (*_*)
     }
   }
 };
 
-export default loginController;
+export default registerController;

@@ -1,7 +1,7 @@
 // Models
-import verify from "../models/verify";
+import verify from "../models/verify.model";
 // Types
-import { verifyType } from "../types/verify";
+import { verifyType } from "../types/verify.type";
 
 export const insertVerify = async (DATA: verifyType): Promise<any> => {
   return await verify.insertOne({

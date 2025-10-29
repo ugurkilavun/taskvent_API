@@ -3,9 +3,9 @@ import request from "supertest";
 import app from "../app";
 // .env
 import dotenv from 'dotenv';
-import { sendVerificationEmail } from "../services/mailService";
+import { sendVerificationEmail } from "../services/mail.service";
 // Utils
-import { generateURLToken, hashURLToken } from "../utils/urlTokens";
+import { generateURLToken, hashURLToken } from "../utils/urlTokens.util";
 
 dotenv.config({ quiet: true })
 

@@ -3,7 +3,7 @@ import crypto from "crypto";
 import path from "path";
 import chalk from "chalk";
 // Types
-import { loggerType } from "../types/logger";
+import { loggerType } from "../types/logger.type";
 
 export class logger {
 
