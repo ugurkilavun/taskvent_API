@@ -9,11 +9,12 @@ const FILEPATH_REGISTER = path.join(__dirname, '..', 'logs', 'registers.json');
 const FILEPATH_LOGIN = path.join(__dirname, '..', 'logs', 'logins.json');
 const FILEPATH_MAIL = path.join(__dirname, '..', 'logs', 'mails.json');
 const FILEPATH_VERIFY = path.join(__dirname, '..', 'logs', 'verifications.json');
+const FILEPATH_SERVER = path.join(__dirname, '..', 'logs', 'server.json');
 // Test
 const FILEPATH_TEST = path.join(__dirname, '..', 'logs', 'tests.json');
 
 // Array
-const FILEPATH_ARRAY = [FILEPATH_REGISTER, FILEPATH_LOGIN, FILEPATH_MAIL, FILEPATH_VERIFY, FILEPATH_TEST];
+const FILEPATH_ARRAY = [FILEPATH_REGISTER, FILEPATH_LOGIN, FILEPATH_MAIL, FILEPATH_VERIFY, FILEPATH_TEST, FILEPATH_SERVER];
 
 // Empty JSON Data
 const emptyJSONData = JSON.stringify([], null, 2);

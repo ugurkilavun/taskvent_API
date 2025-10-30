@@ -1,4 +1,4 @@
-import express, { Application } from 'express';
+import express, { Application, Request, Response } from 'express';
 import bodyParser from "body-parser";
 import cors from "cors";
 import dotenv from 'dotenv';
@@ -9,9 +9,14 @@ import { createFiles } from "./configs/createFiles.config";
 import login from "./routes/login.route";
 import register from "./routes/register.route";
 import verify from "./routes/verify.route";
+// Middlewares
+import { logger } from "./middlewares/logger.middleware";
 
 // .env config
 dotenv.config({ quiet: true });
+
+// Logger
+const logg2r = new logger();
 
 // Creating directories and files
 createFiles();
@@ -29,5 +34,26 @@ app.use(cors({ origin: "*" })); // Permitted URLs
 app.use('/', login);
 app.use('/', register);
 app.use('/', verify);
+
+// https://expressjs.com/en/guide/error-handling.html
+app.use((error: Error, req: Request, res: Response, next: any) => {
+  logg2r.create({
+    timestamp: new Date(),
+    level: "RESPONSE",
+    logType: "server",
+    message: error.message,
+    service: "app",
+    ip: req.ip,
+    endpoint: "/",
+    method: req.method,
+    userAgent: req.get('user-agent'),
+    statusCode: 500,
+    details: {
+      error: "ANYERROR",
+      stack: `Error: ${error.stack}`
+    }
+  }, { file: "server", seeLogConsole: true });
+  res.status(500).send({ message: "Something broke!" });
+})
 
 export default app;
