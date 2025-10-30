@@ -49,7 +49,7 @@ const registerController = async (req: Request, res: Response) => {
         timestamp: new Date(),
         level: "RESPONSE",
         logType: "register",
-        message: "Status code error!",
+        message: error.message,
         service: "register.service",
         username: req.body?.username,
         ip: req.ip,
@@ -60,7 +60,7 @@ const registerController = async (req: Request, res: Response) => {
         durationMs: performance.now() - initialPeriod,
         details: {
           error: "STATCODEERROR",
-          stack: `Error: ${error.message}`
+          stack: `Error: ${error.stack}`
         }
       }, { file: "registers", seeLogConsole: true });
     } else if (error instanceof SyntaxError) {
@@ -73,7 +73,7 @@ const registerController = async (req: Request, res: Response) => {
         timestamp: new Date(),
         level: "RESPONSE",
         logType: "registers",
-        message: "Syntax error!",
+        message: error.message,
         service: "register.service",
         username: req.body?.username,
         ip: req.ip,
@@ -84,7 +84,7 @@ const registerController = async (req: Request, res: Response) => {
         durationMs: performance.now() - initialPeriod,
         details: {
           error: "SYNTAXERROR",
-          stack: `Error: ${error.message}`
+          stack: `Error: ${error.stack}`
         }
       }, { file: "registers", seeLogConsole: true });
     } else {
@@ -97,7 +97,7 @@ const registerController = async (req: Request, res: Response) => {
         timestamp: new Date(),
         level: "RESPONSE",
         logType: "register",
-        message: "Server error!",
+        message: error.messagew,
         service: "register.service",
         username: req.body?.username,
         ip: req.ip,
@@ -108,7 +108,7 @@ const registerController = async (req: Request, res: Response) => {
         durationMs: performance.now() - initialPeriod,
         details: {
           error: "SERVERERROR",
-          stack: `Error: ${error.message}`
+          stack: `Error: ${error.stack}`
         }
       }, { file: "registers", seeLogConsole: true });
       throw error; // unknown error (*_*)

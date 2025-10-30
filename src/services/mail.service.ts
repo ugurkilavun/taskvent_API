@@ -55,7 +55,7 @@ export const sendVerificationEmail = async ({ to, name, verificationUrl, lang }:
       durationMs: performance.now() - initialPeriod,
       details: {
         error: "MAILERROR",
-        stack: `Error: ${error.message}`
+        stack: `Error: ${error.stack}`
       }
     }, { file: "mails", seeLogConsole: true });
     throw error;

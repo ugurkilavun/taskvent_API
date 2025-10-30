@@ -50,7 +50,7 @@ const loginController = async (req: Request, res: Response) => {
         timestamp: new Date(),
         level: "RESPONSE",
         logType: "login",
-        message: "Status code error!",
+        message: error.message,
         service: "login.service",
         username: req.body?.username,
         ip: req.ip,
@@ -61,7 +61,7 @@ const loginController = async (req: Request, res: Response) => {
         durationMs: performance.now() - initialPeriod,
         details: {
           error: "STATCODEERROR",
-          stack: `Error: ${error.message}`
+          stack: `Error: ${error.stack}`
         }
       }, { file: "logins", seeLogConsole: true });
     } else if (error instanceof SyntaxError) {
@@ -74,7 +74,7 @@ const loginController = async (req: Request, res: Response) => {
         timestamp: new Date(),
         level: "RESPONSE",
         logType: "login",
-        message: "Syntax error!",
+        message: error.message,
         service: "login.service",
         username: req.body?.username,
         ip: req.ip,
@@ -85,7 +85,7 @@ const loginController = async (req: Request, res: Response) => {
         durationMs: performance.now() - initialPeriod,
         details: {
           error: "SYNTAXERROR",
-          stack: `Error: ${error.message}`
+          stack: `Error: ${error.stack}`
         }
       }, { file: "logins", seeLogConsole: true });
     } else {
@@ -98,7 +98,7 @@ const loginController = async (req: Request, res: Response) => {
         timestamp: new Date(),
         level: "RESPONSE",
         logType: "login",
-        message: "Server error!",
+        message: error.message,
         service: "login.service",
         username: req.body?.username,
         ip: req.ip,
@@ -109,7 +109,7 @@ const loginController = async (req: Request, res: Response) => {
         durationMs: performance.now() - initialPeriod,
         details: {
           error: "SERVERERROR",
-          stack: `Error: ${error.message}`
+          stack: `Error: ${error.stack}`
         }
       }, { file: "logins", seeLogConsole: true });
       throw error;
