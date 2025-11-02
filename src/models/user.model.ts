@@ -19,6 +19,6 @@ const Schema = new mongoose.Schema({
 });
 
 // Collection name
-const users = mongoose.model('users', Schema);
+const user = mongoose.model('users', Schema);
 
-export default users;
+export default user;

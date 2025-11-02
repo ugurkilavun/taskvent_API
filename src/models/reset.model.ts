@@ -9,10 +9,10 @@ const Schema = new mongoose.Schema({
 }, {
   timestamps: false,
   versionKey: false,
-  collection: 'verifications'
+  collection: 'resets'
 });
 
 // Collection name
-const verify = mongoose.model('verifications', Schema);
+const reset = mongoose.model('resets', Schema);
 
-export default verify;
+export default reset;

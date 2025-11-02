@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 // Configs
 import { gmailTransporter } from '../configs/mailTransporter.config';
 // Mail
-import { evTemplateSelector } from "./mail/utils";
+import { evTemplateSelector, fpTemplateSelector } from "./mail/utils";
 // Types
 import { mailType } from "../types/mails.type";
 // Middlewares
@@ -37,19 +37,19 @@ export const sendVerificationEmail = async ({ to, name, verificationUrl, lang }:
     logg2r.create({
       timestamp: new Date(),
       level: "AUDIT",
-      logType: "mail",
-      message: `Mail sent to ${to}`,
+      logType: "verification mail",
+      message: `Verification mail sent to ${to}`,
       service: "mail.service",
       username: name,
       durationMs: performance.now() - initialPeriod,
     }, { file: "mails", seeLogConsole: true });
-  } catch (error) {
+  } catch (error: any) {
     // Logger - RESPONSE
     logg2r.create({
       timestamp: new Date(),
       level: "AUDIT",
-      logType: "mail",
-      message: `Mail could not be sent: ${to}`,
+      logType: "verification mail",
+      message: `Verification mail could not be sent: ${to}`,
       service: "mail.service",
       username: name,
       durationMs: performance.now() - initialPeriod,
@@ -59,5 +59,56 @@ export const sendVerificationEmail = async ({ to, name, verificationUrl, lang }:
       }
     }, { file: "mails", seeLogConsole: true });
     throw error;
-  }
+  };
+};
+
+export const sendPasswordResetLink = async ({ to, name, resetUrl, lang }: { to: string, name: string, resetUrl: string, lang: string }): Promise<void> => {
+  // For performance
+  const initialPeriod = performance.now();
+
+  // Logger
+  const logg2r = new logger();
+
+  try {
+    const { template, subject }: mailType = fpTemplateSelector(lang);
+
+    const htmlTemplate: any =
+      template.replace("{{name}}", name)
+        .replace("{{resetUrl}}", resetUrl)
+        .replace("{{year}}", new Date().getFullYear().toString())
+        .replace("{{appName}}", "Taskvent");
+
+    await gmailTransporter.sendMail({
+      from: `Taskvent ${process.env.GMAIL_USER}`,
+      to,
+      subject,
+      html: htmlTemplate,
+    });
+    // Logger - RESPONSE
+    logg2r.create({
+      timestamp: new Date(),
+      level: "AUDIT",
+      logType: "password reset mail",
+      message: `Password reset mail sent to ${to}`,
+      service: "mail.service",
+      username: name,
+      durationMs: performance.now() - initialPeriod,
+    }, { file: "mails", seeLogConsole: true });
+  } catch (error: any) {
+    // Logger - RESPONSE
+    logg2r.create({
+      timestamp: new Date(),
+      level: "AUDIT",
+      logType: "Password reset mail",
+      message: `Password reset mail could not be sent: ${to}`,
+      service: "mail.service",
+      username: name,
+      durationMs: performance.now() - initialPeriod,
+      details: {
+        error: "MAILERROR",
+        stack: `Error: ${error.stack}`
+      }
+    }, { file: "mails", seeLogConsole: true });
+    throw error;
+  };
 };

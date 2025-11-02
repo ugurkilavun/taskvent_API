@@ -9,6 +9,7 @@ import { createFiles } from "./configs/createFiles.config";
 import login from "./routes/login.route";
 import register from "./routes/register.route";
 import verify from "./routes/verify.route";
+import reset from "./routes/reset.route";
 // Middlewares
 import { logger } from "./middlewares/logger.middleware";
 
@@ -34,6 +35,7 @@ app.use(cors({ origin: "*" })); // Permitted URLs
 app.use('/', login);
 app.use('/', register);
 app.use('/', verify);
+app.use('/', reset);
 
 // https://expressjs.com/en/guide/error-handling.html
 app.use((error: Error, req: Request, res: Response, next: any) => {

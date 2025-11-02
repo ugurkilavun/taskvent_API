@@ -5,16 +5,18 @@ import path from "path";
 // Directory
 const FILEPATH_LOGS = path.join(__dirname, '..', 'logs');
 // Touch
+const FILEPATH_SERVER = path.join(__dirname, '..', 'logs', 'server.json');
 const FILEPATH_REGISTER = path.join(__dirname, '..', 'logs', 'registers.json');
 const FILEPATH_LOGIN = path.join(__dirname, '..', 'logs', 'logins.json');
 const FILEPATH_MAIL = path.join(__dirname, '..', 'logs', 'mails.json');
 const FILEPATH_VERIFY = path.join(__dirname, '..', 'logs', 'verifications.json');
-const FILEPATH_SERVER = path.join(__dirname, '..', 'logs', 'server.json');
+const FILEPATH_RESET = path.join(__dirname, '..', 'logs', 'resets.json');
+
 // Test
 const FILEPATH_TEST = path.join(__dirname, '..', 'logs', 'tests.json');
 
 // Array
-const FILEPATH_ARRAY = [FILEPATH_REGISTER, FILEPATH_LOGIN, FILEPATH_MAIL, FILEPATH_VERIFY, FILEPATH_TEST, FILEPATH_SERVER];
+const FILEPATH_ARRAY = [FILEPATH_SERVER, FILEPATH_REGISTER, FILEPATH_LOGIN, FILEPATH_MAIL, FILEPATH_VERIFY, FILEPATH_TEST, FILEPATH_RESET];
 
 // Empty JSON Data
 const emptyJSONData = JSON.stringify([], null, 2);

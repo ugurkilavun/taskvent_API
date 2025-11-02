@@ -1,22 +1,26 @@
 // Models
-import users from "../models/users.model";
+import user from "../models/user.model";
 // Types
 import { UserType } from "../types/users.type";
 
 export const findByEmailOrUsername = async (emailOrUsername: string): Promise<any> => {
   return emailOrUsername.includes("@")
-    ? await users.findOne({ email: emailOrUsername }, { _id: 1, email: 1, password: 1 })
-    : await users.findOne({ username: emailOrUsername }, { _id: 1, username: 1, password: 1 });
+    ? await user.findOne({ email: emailOrUsername }, { _id: 1, email: 1, password: 1 })
+    : await user.findOne({ username: emailOrUsername }, { _id: 1, username: 1, password: 1 });
+};
+
+export const findByEmail = async (email: string): Promise<any> => {
+  return await user.findOne({ email: email }, { _id: 1, firstname: 1, lastname: 1, email: 1, country: 1 });
 };
 
 export const checkEmailOrUsername = async (emailOrUsername: string): Promise<any> => {
   return emailOrUsername.includes("@")
-    ? await users.findOne({ email: emailOrUsername }, { _id: 1, email: 1 })
-    : await users.findOne({ username: emailOrUsername }, { _id: 1, username: 1 });
+    ? await user.findOne({ email: emailOrUsername }, { _id: 1, email: 1 })
+    : await user.findOne({ username: emailOrUsername }, { _id: 1, username: 1 });
 };
 
 export const insertUser = async (DATA: UserType): Promise<any> => {
-  return await users.insertOne({
+  return await user.insertOne({
     firstname: DATA.firstname,
     lastname: DATA.lastname,
     username: DATA.username,
@@ -26,4 +30,10 @@ export const insertUser = async (DATA: UserType): Promise<any> => {
     country: DATA.country,
     createdAt: new Date()
   });
+};
+
+export const updatePasswordWithId = async (id: string, password: string): Promise<any> => {
+  return await user.updateOne({
+    _id: id,
+  }, { $set: { password: password } });
 };
