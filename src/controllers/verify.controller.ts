@@ -8,7 +8,7 @@ import { logger } from "../middlewares/logger.middleware";
 // Types
 import { authResponseType } from "../types/responses.type";
 
-const loginController = async (req: Request, res: Response) => {
+const verifyController = async (req: Request, res: Response) => {
   // For performance
   const initialPeriod = performance.now();
 
@@ -118,4 +118,4 @@ const loginController = async (req: Request, res: Response) => {
   }
 };
 
-export default loginController;
+export default verifyController;

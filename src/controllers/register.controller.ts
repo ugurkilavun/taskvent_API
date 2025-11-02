@@ -97,7 +97,7 @@ const registerController = async (req: Request, res: Response) => {
         timestamp: new Date(),
         level: "RESPONSE",
         logType: "register",
-        message: error.messagew,
+        message: error.message,
         service: "register.service",
         username: req.body?.username,
         ip: req.ip,
