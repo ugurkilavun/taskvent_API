@@ -5,11 +5,13 @@ import dotenv from 'dotenv';
 // Configs
 import connectDB from "./configs/db.config";
 import { createFiles } from "./configs/createFiles.config";
-// Pages
+// Routes
 import login from "./routes/login.route";
 import register from "./routes/register.route";
 import verify from "./routes/verify.route";
 import reset from "./routes/reset.route";
+import refresh from "./routes/refresh.route";
+import project from "./routes/project.route";
 // Middlewares
 import { logger } from "./middlewares/logger.middleware";
 
@@ -36,6 +38,8 @@ app.use('/', login);
 app.use('/', register);
 app.use('/', verify);
 app.use('/', reset);
+app.use('/', refresh);
+app.use('/', project);
 
 // https://expressjs.com/en/guide/error-handling.html
 app.use((error: Error, req: Request, res: Response, next: any) => {
@@ -46,7 +50,7 @@ app.use((error: Error, req: Request, res: Response, next: any) => {
     message: error.message,
     service: "app",
     ip: req.ip,
-    endpoint: "/",
+    endpoint: req.url,
     method: req.method,
     userAgent: req.get('user-agent'),
     statusCode: 500,

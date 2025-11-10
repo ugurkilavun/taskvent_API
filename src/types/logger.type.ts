@@ -15,7 +15,7 @@ export type loggerType = {
   statusCode?: number,
   durationMs?: any | undefined,
   details?: {
-    error?: "STATCODEERROR" | "SYNTAXERROR" | "TYPEERROR" | "SERVERERROR" | "MAILERROR" | "VERIFYERROR" | "ANYERROR",
+    error?: "STATCODEERROR" | "SYNTAXERROR" | "TYPEERROR" | "SERVERERROR" | "MAILERROR" | "VERIFYERROR" | "AUTHERROR" | "ANYERROR"| "TOKENERROR",
     stack?: string
   }
 };

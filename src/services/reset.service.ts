@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 // Utils
-import { statusCodeErrors } from "../utils/statusCodeErrors.util";
+import { statusCodeErrors } from "../utils/customErrors.util";
 import { generateURLToken, hashURLToken } from "../utils/urlTokens.util";
 // Repositories
 import { findByEmail, updatePasswordWithId } from "../repositories/user.repository";

@@ -13,6 +13,10 @@ export const findByEmail = async (email: string): Promise<any> => {
   return await user.findOne({ email: email }, { _id: 1, firstname: 1, lastname: 1, email: 1, country: 1 });
 };
 
+export const findById = async (id: string): Promise<any> => {
+  return await user.findOne({ _id: id }, { _id: 1, username: 1 });
+};
+
 export const checkEmailOrUsername = async (emailOrUsername: string): Promise<any> => {
   return emailOrUsername.includes("@")
     ? await user.findOne({ email: emailOrUsername }, { _id: 1, email: 1 })

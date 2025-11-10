@@ -11,12 +11,26 @@ const FILEPATH_LOGIN = path.join(__dirname, '..', 'logs', 'logins.json');
 const FILEPATH_MAIL = path.join(__dirname, '..', 'logs', 'mails.json');
 const FILEPATH_VERIFY = path.join(__dirname, '..', 'logs', 'verifications.json');
 const FILEPATH_RESET = path.join(__dirname, '..', 'logs', 'resets.json');
+const FILEPATH_AUTH = path.join(__dirname, '..', 'logs', 'auths.json');
+const FILEPATH_REFRESH = path.join(__dirname, '..', 'logs', 'refreshes.json');
+const FILEPATH_PROJECTS = path.join(__dirname, '..', 'logs', 'projects.json');
 
 // Test
 const FILEPATH_TEST = path.join(__dirname, '..', 'logs', 'tests.json');
 
 // Array
-const FILEPATH_ARRAY = [FILEPATH_SERVER, FILEPATH_REGISTER, FILEPATH_LOGIN, FILEPATH_MAIL, FILEPATH_VERIFY, FILEPATH_TEST, FILEPATH_RESET];
+const FILEPATH_ARRAY: Array<string> = [
+  FILEPATH_SERVER,
+  FILEPATH_REGISTER,
+  FILEPATH_LOGIN,
+  FILEPATH_MAIL,
+  FILEPATH_VERIFY,
+  FILEPATH_TEST,
+  FILEPATH_RESET,
+  FILEPATH_AUTH,
+  FILEPATH_REFRESH,
+  FILEPATH_PROJECTS
+];
 
 // Empty JSON Data
 const emptyJSONData = JSON.stringify([], null, 2);

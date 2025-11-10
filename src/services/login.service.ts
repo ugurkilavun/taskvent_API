@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 // Utils
 import { signToken } from "../utils/jwt.util";
-import { statusCodeErrors } from "../utils/statusCodeErrors.util";
+import { statusCodeErrors } from "../utils/customErrors.util";
 // Repositories
 import { findByEmailOrUsername } from "../repositories/user.repository";
 // Types
@@ -17,8 +17,20 @@ const loginService = async (username?: string, password?: string): Promise<authR
   const passwdResult = await bcrypt.compare(password, userDATAS.password);
   if (!passwdResult) throw new statusCodeErrors("Username or email not found.", 401);
 
-  const ACCESS_TOKEN: string = signToken({ id: (userDATAS._id).toJSON(), username: userDATAS.username, created_at: new Date() }, "access", '5s');
-  const REFRESH_TOKEN: string = signToken({ id: (userDATAS._id).toJSON(), username: userDATAS.username, created_at: new Date() }, "refresh", '5d');
+  const ACCESS_TOKEN: string = signToken({
+    id: (userDATAS._id).toJSON(),
+    username: userDATAS.username,
+    created_at: new Date()
+  },
+    "access", '15m'
+  ); // 15m
+  const REFRESH_TOKEN: string = signToken({
+    id: (userDATAS._id).toJSON(),
+    username: userDATAS.username,
+    created_at: new Date()
+  },
+    "refresh", '60d'
+  ); // 60d
 
   return {
     response: {

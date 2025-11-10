@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 // Services
 import { forgotPassword, resetPassword } from "../services/reset.service";
 // Utils
-import { statusCodeErrors } from "../utils/statusCodeErrors.util"; // Error
+import { statusCodeErrors } from "../utils/customErrors.util"; // Error
 import { hashURLToken } from '../utils/urlTokens.util';
 // Middlewares
 import { logger } from "../middlewares/logger.middleware";

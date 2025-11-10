@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 // Services
 import verifyService from "../services/verify.service";
 // Errors
-import { statusCodeErrors } from "../utils/statusCodeErrors.util";
+import { statusCodeErrors } from "../utils/customErrors.util";
 // Middlewares
 import { logger } from "../middlewares/logger.middleware";
 // Types

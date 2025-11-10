@@ -13,7 +13,3 @@ export const signToken = (payload: object, secretType: string, expiresIn: any): 
 
   return token;
 };
-
-export const verifyToken = (token: any) => {
-  return jwt.verify(token, process.env.JWT_SECRET);
-};

@@ -2,7 +2,7 @@ import bcrypt from "bcrypt";
 import dotenv from 'dotenv';
 // Utils
 import { signToken } from "../utils/jwt.util";
-import { statusCodeErrors } from "../utils/statusCodeErrors.util";
+import { statusCodeErrors } from "../utils/customErrors.util";
 import { generateURLToken, hashURLToken } from "../utils/urlTokens.util";
 // Repositories
 import { checkEmailOrUsername, insertUser } from "../repositories/user.repository";
@@ -63,8 +63,20 @@ const registerService = async (DATA: UserType): Promise<authResponseType> => {
     lang: DATA.country
   });
 
-  const ACCESS_TOKEN: string = signToken({ id: (userIn._id).toJSON(), username: userIn.username, created_at: new Date() }, "access", '5s');
-  const REFRESH_TOKEN: string = signToken({ id: (userIn._id).toJSON(), username: userIn.username, created_at: new Date() }, "refresh", '5d');
+  const ACCESS_TOKEN: string = signToken({
+    id: (userIn._id).toJSON(),
+    username: userIn.username,
+    created_at: new Date()
+  },
+    "access", '15m'
+  );
+  const REFRESH_TOKEN: string = signToken({
+    id: (userIn._id).toJSON(),
+    username: userIn.username,
+    created_at: new Date()
+  },
+    "refresh", '60d'
+  );
 
   return {
     response: {

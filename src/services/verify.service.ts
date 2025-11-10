@@ -1,5 +1,5 @@
 // Utils
-import { statusCodeErrors } from "../utils/statusCodeErrors.util";
+import { statusCodeErrors } from "../utils/customErrors.util";
 import { verifyURLToken, hashURLToken } from "../utils/urlTokens.util";
 // Repositories
 import { updateVerify, findVerify } from "../repositories/verify.repository";

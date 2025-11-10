@@ -9,5 +9,5 @@ export class statusCodeErrors extends Error {
     this.name = "StatusCodeError";
     this.statusCode = statusCode;
     Object.setPrototypeOf(this, new.target.prototype);
-  }
+  };
 };
