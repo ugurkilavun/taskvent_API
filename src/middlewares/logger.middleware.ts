@@ -57,7 +57,7 @@ export class logger {
       if (seeLogConsole) {
         console.log(`\x1b[93m[${DATENOW}]  ${loggerType.level}  ${loggerType.method}  ${loggerType.endpoint}\x1b[0m`);
         console.log(`\x1b[93mRequestID: ${REQUESTID}  UserID: ${loggerType.userID}  IP: ${loggerType.ip}\x1b[0m`);
-        console.log(`\x1b[93mService: ${loggerType.service}  Status: ${loggerType.statusCode}  Duration: ${loggerType.durationMs}\x1b[0m`);
+        console.log(`\x1b[93mService: ${loggerType.service}  Status Code: ${loggerType.statusCode}  Duration: ${loggerType.durationMs}\x1b[0m`);
         console.log(`\x1b[93mMessage: ${loggerType.message}\x1b[0m`);
         console.log(chalk.dim("─".repeat(110)));
       };

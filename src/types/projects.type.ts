@@ -1,6 +1,7 @@
 export type projectType = {
   owner: string,
-  name: string,
+  teamID: Array<string>,
+  title: string,
   description: string,
   tags: Array<string>,
   createdAt: Date

@@ -15,7 +15,10 @@ export const authControl = async (req: Request, res: Response, next: NextFunctio
 
   try {
     const decoded: any = jwt.verify(token, process.env.ACCESS_SECRET);
-    req.body.userID = decoded.id;
+    // Method: POST
+    if (req.method === "POST") req.body.userID = decoded.id;
+    // Method: GET
+    if (req.method === "GET") req.params.userID = decoded.id;
 
     // Logger - AUDIT
     logg2r.create({

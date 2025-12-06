@@ -84,7 +84,8 @@ const registerService = async (DATA: UserType): Promise<authResponseType> => {
       access_token: ACCESS_TOKEN,
       refresh_token: REFRESH_TOKEN
     },
-    userId: userIn._id
+    userId: userIn._id,
+    HTTPStatusCode: 201
   };
 };
 

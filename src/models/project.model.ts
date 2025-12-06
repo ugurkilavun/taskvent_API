@@ -1,9 +1,9 @@
 import mongoose from 'mongoose';
 
-// ? owner, name, description, tags,createdAt
 const Schema = new mongoose.Schema({
   owner: mongoose.Schema.Types.ObjectId,
-  name: String,
+  teamID: [mongoose.Schema.Types.ObjectId],
+  title: String,
   description: String,
   tags: [String],
   createdAt: Date

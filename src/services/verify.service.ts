@@ -28,7 +28,8 @@ const verifyService = async (token: string): Promise<authResponseType> => {
     response: {
       message: "Email verified.",
     },
-    userId: verifyFin.id
+    userId: verifyFin.id,
+    HTTPStatusCode: 200
   };
 
 };

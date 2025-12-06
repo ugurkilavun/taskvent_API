@@ -38,7 +38,8 @@ const loginService = async (username?: string, password?: string): Promise<authR
       access_token: ACCESS_TOKEN,
       refresh_token: REFRESH_TOKEN
     },
-    userId: userDATAS._id
+    userId: userDATAS._id,
+    HTTPStatusCode: 200,
   };
 
 };

@@ -17,6 +17,14 @@ export const findById = async (id: string): Promise<any> => {
   return await user.findOne({ _id: id }, { _id: 1, username: 1 });
 };
 
+export const findByUsername = async (username: string): Promise<any> => {
+  return await user.findOne({ username: username }, { _id: 1, firstname: 1, lastname: 1, username: 1 });
+};
+
+export const findById_flu = async (id: string): Promise<any> => {
+  return await user.findOne({ _id: id }, { _id: 0, firstname: 1, lastname: 1, username: 1 });
+};
+
 export const checkEmailOrUsername = async (emailOrUsername: string): Promise<any> => {
   return emailOrUsername.includes("@")
     ? await user.findOne({ email: emailOrUsername }, { _id: 1, email: 1 })

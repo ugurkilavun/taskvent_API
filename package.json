@@ -1,5 +1,5 @@
 {
-  "name": "taskvent_API",
+  "name": "taskvent_api",
   "version": "1.0.0",
   "description": "Task & Team Management Platform API",
   "main": "server.js",
